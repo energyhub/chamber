@@ -8,8 +8,8 @@ import (
 	"strings"
 
 	"github.com/pkg/errors"
-	"github.com/segmentio/chamber/store"
 	"github.com/spf13/cobra"
+	"github.com/splunkcloud/chamber/store"
 )
 
 var (
