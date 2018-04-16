@@ -350,6 +350,8 @@ func (s *SSMStore) List(service string, includeValues bool) ([]Secret, error) {
 // use in production environments.
 func (s *SSMStore) ListRaw(service string) ([]RawSecret, error) {
 	if s.usePaths {
+		service = serviceForPath(service)
+
 		secrets := map[string]RawSecret{}
 		var nextToken *string
 		for {
@@ -483,7 +485,7 @@ func (s *SSMStore) listRawViaList(service string) ([]RawSecret, error) {
 
 func (s *SSMStore) idToName(id SecretId) string {
 	if s.usePaths {
-		return fmt.Sprintf("/%s/%s", id.Service, id.Key)
+		return fmt.Sprintf("/%s/%s", serviceForPath(id.Service), id.Key)
 	}
 
 	return fmt.Sprintf("%s.%s", id.Service, id.Key)
@@ -503,6 +505,10 @@ func basePath(key string) string {
 	}
 	end := len(pathParts) - 1
 	return strings.Join(pathParts[0:end], "/")
+}
+
+func serviceForPath(service string) string {
+	return strings.TrimLeft(service, "/")
 }
 
 func parameterMetaToSecretMeta(p *ssm.ParameterMetadata) SecretMetadata {
