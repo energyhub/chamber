@@ -45,7 +45,7 @@ func runExport(cmd *cobra.Command, args []string) error {
 			return errors.Wrapf(err, "Failed to validate service %s", service)
 		}
 
-		rawSecrets, err := secretStore.ListRaw(strings.ToLower(service))
+		rawSecrets, err := secretStore.ListRaw(service)
 		if err != nil {
 			return errors.Wrapf(err, "Failed to list store contents for service %s", service)
 		}

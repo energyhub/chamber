@@ -5,8 +5,6 @@ import (
 	"fmt"
 	"io"
 	"os"
-	"strings"
-
 	"github.com/pkg/errors"
 	"github.com/segmentio/chamber/store"
 	"github.com/spf13/cobra"
@@ -26,7 +24,7 @@ func init() {
 }
 
 func importRun(cmd *cobra.Command, args []string) error {
-	service := strings.ToLower(args[0])
+	service := args[0]
 	if err := validateService(service); err != nil {
 		return errors.Wrap(err, "Failed to validate service")
 	}

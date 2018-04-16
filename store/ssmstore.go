@@ -483,7 +483,7 @@ func (s *SSMStore) listRawViaList(service string) ([]RawSecret, error) {
 
 func (s *SSMStore) idToName(id SecretId) string {
 	if s.usePaths {
-		return fmt.Sprintf("/%s/%s", id.Service, id.Key)
+		return fmt.Sprintf("/%s/%s", strings.TrimLeft(id.Service, "/"), id.Key)
 	}
 
 	return fmt.Sprintf("%s.%s", id.Service, id.Key)
